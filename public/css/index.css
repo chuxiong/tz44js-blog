@@ -1,0 +1,79 @@
+/* 
+  文章列表 背景色
+ */
+ .layui-col-space15{
+  margin-right: -22px;
+  margin-left: -22px;
+}
+.layui-col-space15 .layui-col-md8{
+  border-radius: 2px;
+  background-color: #fff;
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
+  padding-bottom: 0;
+}
+
+
+
+/*文章列表*/
+
+.article-list li {
+  position: relative;
+  padding: 15px 15px 15px 75px;
+  border-bottom: 1px dotted #e2e2e2;
+}
+
+.list-face {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+}
+
+
+
+
+
+/*文章列表头像*/
+
+.article-list img {
+  display: block;
+  width: 45px;
+  height: 45px;
+  margin: 0;
+  border-radius: 2px;
+}
+
+.article-list h2 {
+  font-size: 0;
+  height: 22px;
+}
+
+.articlt-title {
+  display: inline-block;
+  width: 80%;
+  vertical-align: top;
+}
+
+.article-list h2 a {
+  font-size: 16px;
+  margin-right: 16px;
+}
+
+.article-list h2 .layui-badge {
+  padding-bottom: 3px;
+}
+
+/*描述*/
+
+.list-info {
+  margin-top: 7px;
+}
+
+.list-info * {
+  padding-right: 10px;
+  color: #999;
+}
+
+.list-reply {
+  float: right;
+  margin-top: 3px;
+}

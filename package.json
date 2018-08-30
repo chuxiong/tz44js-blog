@@ -16,5 +16,13 @@
   "bugs": {
     "url": "https://github.com/chuxiong/tz44js-blog/issues"
   },
-  "homepage": "https://github.com/chuxiong/tz44js-blog#readme"
+  "homepage": "https://github.com/chuxiong/tz44js-blog#readme",
+  "dependencies": {
+    "koa": "^2.5.2",
+    "koa-logger": "^3.2.0",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
+    "koa-views": "^6.1.4",
+    "pug": "^2.0.3"
+  }
 }

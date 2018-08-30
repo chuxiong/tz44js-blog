@@ -1,0 +1,73 @@
+extends ./layout/layout
+
+block css
+  link(rel="stylesheet", href="/css/index.css")
+  link(rel="stylesheet", href="/css/article.css")
+
+//- 
+  文章标题
+  作者
+  时间
+  tips
+  content
+
+  评论：
+    头像
+    名字
+    时间
+    内容
+
+
+block contents
+  include ./layout/tag
+  
+  .layui-container
+    .layui-row.layui-col-space15
+      //- 文章列表
+      .layui-col-md8
+        //- 内容部分
+        .content.default-box.layui-text
+          //- h1 记录文章id值，.art-title用户js里快速获取h1对象
+          h1(data-artid=article._id).art-title.text-center= article.title
+          div.other-info.text-center
+            span= article.author.username
+            span &nbsp;&nbsp;发表于：
+            span= article.updated.toLocaleString()
+            span &nbsp;分类：
+            span= article.tips
+          //- 文章内容
+          div(style="padding:10px;").article-detail!= article.content
+            
+
+
+        //- 评论
+        .commment.default-box
+          fieldset.text-center
+              legend 评论
+          div.txt
+            <textarea id="comment-txt"></textarea>
+            button.layui-btn 回复
+          ul.comment-list
+            //- li
+            //-   img(src="/img/1.jpg")
+            //-   div
+            //-     p.author comment.username
+            //-     p.time 2018-06-29 13:19:13
+            //-   .she-said.
+            //-     这是评论的内容
+            each info in comment
+              li
+                img(src=info.from.avatar)
+                div
+                  p.author= info.from.username
+                  p.time= info.created.toLocaleString()
+                .she-said!= info.content
+
+      //- 右侧公告
+      include ./layout/right_tag
+
+
+
+
+block scripts
+  script(src="/js/article.js")

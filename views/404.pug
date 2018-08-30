@@ -1,0 +1,24 @@
+doctype html
+html
+  head
+    title 404
+    meta(charset="uft8")
+    style(ref="stylesheet").
+      .text-center{
+        text-align: center;
+      }
+  body
+    h1.text-center 404
+    h2.text-center sorry! not found!!!
+
+    div.text-center
+      span#time 3
+      |秒后将返回首页
+    
+    script.
+      let n = 3
+      const fn = () => {
+        time.innerHTML = --n
+        if(n === 0)location.href = "/"
+      }
+      setInterval(fn, 1000)

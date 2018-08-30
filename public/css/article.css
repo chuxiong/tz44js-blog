@@ -1,0 +1,72 @@
+
+/* 文章默认盒子padding */
+.default-box{
+  padding: 20px;
+}
+/* 文字居中 */
+.text-center{
+  text-align: center;
+}
+.layui-col-space15 .layui-col-md8{
+  /* 背景回复默认 跟评论区分开来 */
+  background: #F2F2F2;
+}
+
+.content{
+  /* height: 100px; */
+  margin-bottom: 20px;
+}
+
+.content, .commment{
+  background: #fff;
+}
+
+.other-info{
+  padding: 20px 0;
+}
+
+fieldset{
+  border-color: #eee;
+  border-width: 1px 0 0;
+  font-size: 20px;
+}
+
+.commment button{
+  margin-top: 20px;
+}
+
+.txt{
+  padding-bottom:20px;
+  border-bottom:1px solid;
+  border-color:#999;
+}
+
+.comment-list li{
+  position: relative;
+  padding-left: 60px;
+  border-bottom: 1px solid #bbb;
+  padding-top: 15px;
+}
+.comment-list li img{
+  position: absolute;
+  top: 15px;
+  left: 0;
+  width: 50px;
+  height: 50px;
+}
+.comment-list li p{
+  padding: 3px;
+}
+.author{
+  color:#01AAED;
+  font-size:18px;
+}
+
+.time{
+  color:#bbb;
+}
+
+.she-said{
+  padding: 20px 0;
+  margin-left: -60px;
+}

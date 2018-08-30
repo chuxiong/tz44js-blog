@@ -1,0 +1,52 @@
+extends ./admin
+
+block main
+  table(lay-data="{ url:'/user/comments', page:true, id:'idTest'}", lay-filter="demo").layui-table
+    thead
+      tr
+        th(lay-data="{field:'article', align:'center', templet: res => res.article.title}") 被评文章
+        th(lay-data="{field:'content', align:'center'}") 评论内容
+        th(lay-data="{field:'created', align:'center', templet: res => (new Date(res.created)).toLocaleString()}") 评论时间
+        th(lay-data="{fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}") 操作
+  script(type="text/html")#barDemo
+    a(lay-event="del").layui-btn.layui-btn-danger.layui-btn-xs 删除
+
+
+  script.
+    layui.use(['table', 'layer'], function(){
+      const table = layui.table
+      const layer = layui.layer
+      const $ = layui.$
+      
+      table.on("tool(demo)", (obj) => {
+        const data = obj.data
+        // 评论id
+        const commentId = data._id
+        // 文章id
+        const articleId = data.article._id
+
+
+        if(obj.event !== "del") return
+
+        layer.confirm("确认删除？", () => {
+          $.ajax({
+            method: "delete",
+            url: "/comment/" + commentId,
+            data: {
+              // 发送文章id值，减少后台查询
+              articleId
+            },
+            success(res){
+              if(res.state){
+                layer.msg(res.message, {
+                  anim: 1,
+                  time: 800
+                }, () => location.reload())
+              }else{
+                console.error(res.message)
+              }
+            }
+          })
+        })
+      })
+    })

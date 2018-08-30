@@ -1,0 +1,53 @@
+extends ./layout/layout
+
+block css
+  link(rel="stylesheet", href="/css/register.css")
+
+mixin userinfo
+  .layui-form-item
+    label.layui-form-label 用户名
+    .layui-input-inline
+      input(type="text", name="username", required, lay-verify="required", placeholder="请输入用户名").layui-input
+  .layui-form-item
+    label.layui-form-label 密码
+    .layui-input-inline
+      input(type="password", name="password", required, lay-verify="required", placeholder="请输入密码").layui-input
+
+mixin btn
+  button(lay-submit, lay-filter="formDemo").layui-btn 立即提交
+  button(type="reset").layui-btn.layui-btn-primary 重置
+
+
+block contents
+  #main
+    .layui-container
+      .layui-tab
+        ul.layui-tab-title
+          li(class=show?"":"layui-this")
+            a(href="/user/login") 用户登录
+          li(class=show?"layui-this":"")
+            a(href="/user/reg") 用户注册
+        .layui-tab-content
+          //- 登录
+          .layui-tab-item(class=show?"":"layui-show")
+            form(action="/user/login", method="post").layui-form
+              +userinfo
+              .layui-form-item
+                .layui-input-block
+                  +btn
+          
+          //- 注册
+          .layui-tab-item(class=show?"layui-show":"")
+            form(action="/user/reg", method="POST").layui-form
+              +userinfo
+              .layui-form-item
+                label.layui-form-label 确认密码
+                .layui-input-inline
+                  input(type="password", name="confirmPWD", required, lay-verify="required", placeholder="请确认密码").layui-input
+             
+              .layui-form-item
+                .layui-input-block
+                  +btn
+
+block scripts
+  script(src="/js/register.js")

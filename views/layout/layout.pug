@@ -1,0 +1,23 @@
+doctype html
+html
+  head
+    title= title
+    meta(charset="utf-8")
+    meta(name="author", content="fengyu")
+    link(rel="stylesheet", href="/layui/css/layui.css")
+    link(rel="stylesheet", href="/css/nav.css")
+    block css
+
+    script(src="/layui/layui.js")
+  body
+    //- nav
+    include ./nav
+
+    //- content
+    block contents
+
+    //- footer
+    include ./footer.pug
+
+    //- script
+    block scripts

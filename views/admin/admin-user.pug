@@ -1,0 +1,49 @@
+extends ./admin
+
+block main
+  table(lay-data="{url:'/user/users', page:true, id:'idTest'}", lay-filter="demo").layui-table
+    thead
+      tr
+        th(lay-data="{field:'username', align:'center'}") 用户名
+        th(lay-data="{field:'role', align:'center'}") 权限
+        th(lay-data="{field:'articleCount', align:'center'}") 文章数量
+        
+        th(lay-data="{field:'commentCount', align:'center'}") 评论数量
+
+        th(lay-data="{fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}") 操作
+  script(type="text/html")#barDemo
+    a(lay-event="del").layui-btn.layui-btn-danger.layui-btn-xs 删除
+  
+  script.
+    layui.use(['table', 'layer'], function(){
+      const table = layui.table
+      const layer = layui.layer
+      const $ = layui.$
+      
+      table.on("tool(demo)", (obj) => {
+        const data = obj.data
+        const _id = data._id
+        //console.log(data)
+        if(obj.event !== "del") return
+
+        layer.confirm("确认删除？", () => {
+          $.ajax({
+            method: "delete",
+            url: "/article/" + _id,
+            data: {
+              _id
+            },
+            success(res){
+              if(res.state){
+                layer.msg(res.message, {
+                  anim: 1,
+                  time: 800
+                }, () => location.reload())
+              }else{
+                console.error(res.message)
+              }
+            }
+          })
+        })
+      })
+    });
