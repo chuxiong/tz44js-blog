@@ -19,10 +19,12 @@
   "homepage": "https://github.com/chuxiong/tz44js-blog#readme",
   "dependencies": {
     "koa": "^2.5.2",
+    "koa-body": "^4.0.4",
     "koa-logger": "^3.2.0",
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
     "koa-views": "^6.1.4",
+    "mongoose": "^5.2.12",
     "pug": "^2.0.3"
   }
 }
