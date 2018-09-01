@@ -36,7 +36,5 @@ layui.use(['layedit', 'layer', 'element'], function(){
         }
       })
     })
- 
-
   })
 });

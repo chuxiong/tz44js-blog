@@ -102,8 +102,6 @@ block scripts
           content: layedit.getContent(index)
         }
 
-        
-
         $.post("/article", data, (msg) => {
           if(msg.status){
             layer.alert('发表成功', (res) => {
@@ -113,7 +111,6 @@ block scripts
             layer.alert(`发表失败，失败信息：${msg.msg}`)
           }
         })
-
       })
 
 
