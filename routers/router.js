@@ -7,12 +7,7 @@ const article = require('../control/article')
 const router = new Router
 
 // 设计主页  
-router.get("/", user.keepLog, async (ctx) => {
-  await ctx.render("index", {
-    title: '博客实战首页',
-    session: ctx.session
-  })
-})
+router.get("/", user.keepLog, article.getList)
 
 // 主要用来处理返回  用户登录 用户注册
 router.get(/^\/user\/(?=reg|login)/, async (ctx) => {
@@ -21,9 +16,6 @@ router.get(/^\/user\/(?=reg|login)/, async (ctx) => {
 
   await ctx.render("register", {show})
 })
-
-
-
 
 // 注册用户 路由
 router.post("/user/reg", user.reg)
@@ -39,6 +31,11 @@ router.get('/article', user.keepLog, article.addPage)
 
 // 文章添加
 router.post("/article", user.keepLog, article.add)
+
+// 文章列表分页 路由
+router.get("/page/:id", article.getList)
+
+
 
 
 module.exports = router
