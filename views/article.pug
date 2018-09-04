@@ -32,7 +32,7 @@ block contents
           div.other-info.text-center
             span= article.author.username
             span &nbsp;&nbsp;发表于：
-            span= article.updated.toLocaleString()
+            span= article.created.toLocaleString()
             span &nbsp;分类：
             span= article.tips
           //- 文章内容
@@ -41,7 +41,7 @@ block contents
 
 
         //- 评论
-        .commment.default-box
+        .comment.default-box
           fieldset.text-center
               legend 评论
           div.txt

@@ -1,12 +1,13 @@
 const { db } = require('../Schema/config')
+// 通过 db 对象创建操作article数据库的模型对象
 const ArticleSchema = require('../Schema/article')
+const Article = db.model("articles", ArticleSchema)
 // 去用户的 Schema，为了拿到操作 users 集合的实例对象
 const UserSchema = require('../Schema/user')
 const User = db.model("users", UserSchema)
 
-
-// 通过 db 对象创建操作article数据库的模型对象
-const Article = db.model("articles", ArticleSchema)
+const CommentSchema = require('../Schema/comment')
+const Comment = db.model("comments", CommentSchema)
 
 // 返回文章发表页
 exports.addPage = async (ctx) => {
@@ -31,10 +32,19 @@ exports.add = async ctx => {
   const data = ctx.request.body
   // 添加文章的作者
   data.author = ctx.session.uid
+  data.commentNum = 0
+
 
   await new Promise((resolve, reject) => {
     new Article(data).save((err, data) => {
       if(err)return reject(err)
+      // 更新用户文章计数
+      User.update({_id: data.author}, {$inc: {articleNum: 1}}, err => {
+        if(err)return console.log(err)
+        console.log("文章保存成功")
+      })
+     
+      console.log(data.author)
       resolve(data)
     })
   })
@@ -60,7 +70,7 @@ exports.getList = async ctx => {
   page--
   
   const maxNum = await Article.estimatedDocumentCount((err, num) => err? console.log(err) : num)
-  1 
+  
   const artList = await Article
     .find()
     .sort('-created')
@@ -74,6 +84,7 @@ exports.getList = async ctx => {
     .then(data => data)
     .catch(err => console.log(err))
 
+  
 
   await ctx.render("index", {
     session: ctx.session,
@@ -82,4 +93,38 @@ exports.getList = async ctx => {
     maxNum,
   })
   // await ctx.render("index", {})
+}
+
+// 文章详情
+exports.details = async ctx => {
+  // 去动态路由的里的 id
+  const _id = ctx.params.id
+
+  // 查找文章本身数据
+  const article = await Article
+    .findById(_id)
+    .populate("author", "username")
+    .then(data => data)
+
+  // 查找跟当前文章关联的所有评论
+
+  const comment = await Comment
+    .find({article: _id})
+    .sort("-created")
+    .populate("from", "username avatar")
+    .then(data => data)
+    .catch(err => {
+      console.log(err)
+    })
+
+
+
+  
+
+  await ctx.render("article", {
+    title: article.title,
+    article,
+    comment,
+    session: ctx.session
+  })
 }

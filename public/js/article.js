@@ -15,7 +15,7 @@ layui.use(['layedit', 'layer', 'element'], function(){
 
   
 
-  $(".commment button").click(async () => {
+  $(".comment button").click(async () => {
     let content = layedit.getContent(idx).trim()
 
     if(content.length === 0)return layer.msg("评论内容不能为空")
@@ -30,7 +30,7 @@ layui.use(['layedit', 'layer', 'element'], function(){
         time: 1000,
         end(){
           if(data.status === 1){
-            // 评论成功就承载页面
+            // 评论成功就重载页面
             window.location.reload()
           }
         }
