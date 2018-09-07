@@ -1,13 +1,6 @@
-const { db } = require('../Schema/config')
-// 通过 db 对象创建操作article数据库的模型对象
-const ArticleSchema = require('../Schema/article')
-const Article = db.model("articles", ArticleSchema)
-// 去用户的 Schema，为了拿到操作 users 集合的实例对象
-const UserSchema = require('../Schema/user')
-const User = db.model("users", UserSchema)
-
-const CommentSchema = require('../Schema/comment')
-const Comment = db.model("comments", CommentSchema)
+const Article = require('../Models/article')
+const User = require('../Models/user')
+const Comment = require('../Models/comment')
 
 // 返回文章发表页
 exports.addPage = async (ctx) => {
@@ -149,59 +142,19 @@ exports.artlist = async ctx => {
 exports.del = async ctx => {
   const _id = ctx.params.id
   
-  let uid;
+  let res = {
+    state: 1,
+    message: "成功"
+  }
 
-  // 用户的 articleNum  -= 1
-  // 删除文章对应的所有的评论
-  // 被删除评论对应的用户表里的 commnetNum -= 1
-
-  let res = {}
-
-  // 删除文章
-  await Article.deleteOne({_id}).exec(async err => {
-    if(err){
+  await Article.findById(_id)
+    .then(data => data.remove())
+    .catch(err => {
       res = {
         state: 0,
-        message: '删除失败'
+        message: err
       }
-    }else{
-      await Article.findById(_id).then(data => {
-        uid = data.author
-      })
-    }
-  })
-
-  await User.update({_id: uid}, {$inc: {articleNum: -1}})
-
-  // 删除所有评论
-  await Comment.find({article: _id}).then(async data => {
-    // data => array
-    let len = data.length
-    let i = 0
-
-    async function deleteUser(){
-      if(i >= len)return
-      const cId = data[i]._id
-
-      await Comment.deleteOne({_id: cId}).then(data => {
-        User.update({_id: data[i].from}, {$inc: {commentNum: -1}}, err => {
-          if(err)return console.log(err)
-          i++
-        })
-      })
-    }
-
-
-    await deleteUser()
-
-
-    res = {
-      state: 1,
-      message: "成功"
-    }
-
-  })
-
+    })
 
   ctx.body = res
 }

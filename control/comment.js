@@ -1,14 +1,6 @@
-const { db } = require('../Schema/config')
-
-const ArticleSchema = require('../Schema/article')
-const Article = db.model("articles", ArticleSchema)
-
-// 去用户的 Schema，为了拿到操作 users 集合的实例对象
-const UserSchema = require('../Schema/user')
-const User = db.model("users", UserSchema)
-
-const CommentSchema = require('../Schema/comment.js')
-const Comment = db.model("comments", CommentSchema)
+const Article = require('../Models/article')
+const User = require('../Models/user')
+const Comment = require('../Models/comment')
 
 // 保存评论
 exports.save = async ctx => {
@@ -74,34 +66,21 @@ exports.comlist = async ctx => {
 exports.del = async ctx => {
   // 评论 id
   const commentId = ctx.params.id
+  // 拿到 commentID   删除 comment ，
 
-  let isOk = true
-
-  let articleId, uid;
-
-  // 删除评论
-  await Comment.findById(commentId, (err, data) => {
-    if(err){
-      console.log(err)
-      isOk = false
-      return
-    }else{
-      articleId = data.article
-      uid = data.from
-    }
-  })
-
-  await Article
-    .update({_id: articleId}, {$inc: {commentNum: -1}})
-
-  await User.update({_id: uid}, {$inc: {commentNum: -1}})
-
-  await Comment.deleteOne({_id: commentId})
-
-  if(isOk){
-    ctx.body = {
-      state: 1,
-      message: "删除成功"
-    }
+  let res = {
+    state: 1,
+    message: "成功"
   }
-}
+
+  await Comment.findById(commentId)
+    .then(data => data.remove())
+    .catch(err => {
+      res = {
+        state: 0,
+        message: err
+      }
+    })
+
+  ctx.body = res
+} 
