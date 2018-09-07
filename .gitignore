@@ -62,3 +62,5 @@ typings/
 
 # database
 database/db/*
+
+.DS_Store
