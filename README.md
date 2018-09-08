@@ -4,6 +4,7 @@
 #启动项目
 ```shell
 cd tz44js-blog
+npm i
 mongod --dbpath database/db
 node app
 ```
