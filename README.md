@@ -2,6 +2,8 @@
 潭州教育44期 js 项目实战《简易个人博客》
 
 #启动项目
-```js
-  node app
- ```
+```shell
+cd tz44js-blog
+mongod --dbpath database/db
+node app
+```
